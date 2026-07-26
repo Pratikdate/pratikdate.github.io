@@ -94,12 +94,12 @@ sequenceDiagram
     participant Comp as Row Compressor
     participant ICL as ICL Transformer
     
-    User->>Preprocessor: Raw DataFrame (X_train, X_test)
+    User->>Preprocessor: Raw DataFrame
     Preprocessor->>Attn: Standardized Cell Tokens
-    Note over Attn: Alternates Attention across<br/>Columns (Features) & Rows (Samples)
+    Note over Attn: Alternates Attention across<br/>Columns and Rows
     Attn->>Comp: Multi-layer Cell Embeddings
-    Comp->>ICL: Compressed Row Embeddings (1 vector/row)
-    ICL->>User: Zero-Shot Class Probabilities / Regressions
+    Comp->>ICL: Compressed Row Embeddings
+    ICL->>User: Zero-Shot Predictions
 ```
 
 1. **Preprocessing:** TabFM converts mixed column types (continuous numbers, strings, categories) into standardized numerical tokens.
@@ -192,19 +192,19 @@ When raw zero-shot TabFM needs an extra performance push to beat a fully tuned L
 
 ```mermaid
 flowchart TD
-    RawX[Raw Input X] --> SVD[Compute SVD Features]
-    RawX --> Cross[Compute Feature Crosses]
+    RawX["Raw Input X"] --> SVD["Compute SVD Features"]
+    RawX --> Cross["Compute Feature Crosses"]
     
-    RawX --> Base[TabFM Base Model]
-    SVD --> Model2[TabFM SVD Variant]
-    Cross --> Model3[TabFM Cross Variant]
+    RawX --> Base["TabFM Base Model"]
+    SVD --> Model2["TabFM SVD Variant"]
+    Cross --> Model3["TabFM Cross Variant"]
     
-    Base --> NNLS[Non-Negative Least Squares 32-Way Blending]
+    Base --> NNLS["Non-Negative Least Squares 32-Way Blending"]
     Model2 --> NNLS
     Model3 --> NNLS
     
-    NNLS --> Platt[Platt Scaling Calibration]
-    Platt --> Final[State-of-the-Art Predictions]
+    NNLS --> Platt["Platt Scaling Calibration"]
+    Platt --> Final["State-of-the-Art Predictions"]
 ```
 
 ### Implementing TabFM-Ensemble

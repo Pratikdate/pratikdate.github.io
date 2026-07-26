@@ -28,11 +28,11 @@ To understand why TabFM is a big deal, we first need to look at how data scienti
 
 ```mermaid
 flowchart LR
-    Raw[Raw Table / CSV] --> FE[Manual Feature Engineering]
-    FE --> Enc[Encoding & Imputation]
-    Enc --> HPO[ Tedious Hyperparameter Tuning ]
-    HPO --> Fit[XGBoost .fit()]
-    Fit --> Deploy[Deploy 1-Off Model]
+    Raw["Raw Table / CSV"] --> FE["Manual Feature Engineering"]
+    FE --> Enc["Encoding & Imputation"]
+    Enc --> HPO["Tedious Hyperparameter Tuning"]
+    HPO --> Fit["XGBoost .fit()"]
+    Fit --> Deploy["Deploy 1-Off Model"]
 ```
 
 Imagine every time you wanted to bake a cake, you had to build a custom oven from raw metal, calibrate the temperature sensors by trial and error for 5 hours, bake the single cake, and then throw the oven away. 
@@ -54,8 +54,8 @@ In Natural Language Processing (NLP), Large Language Models (LLMs) solved this p
 
 ```mermaid
 flowchart LR
-    Data[Train Rows + Test Rows] --> TabFM[TabFM Foundation Model]
-    TabFM --> Preds[Instant Predictions]
+    Data["Train Rows + Test Rows"] --> TabFM["TabFM Foundation Model"]
+    TabFM --> Preds["Instant Predictions"]
 ```
 
 With TabFM, you hand the model your historical table rows (with labels) alongside your unseen target rows (without labels) as a single unified prompt. TabFM analyzes the relationships, understands the pattern, and outputs accurate predictions instantly—**with zero model training, zero hyperparameter tuning, and zero manual feature engineering.**
