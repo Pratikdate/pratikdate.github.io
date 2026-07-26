@@ -32,6 +32,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Expand / Shrink Bio Text Toggle
+    const bioToggleBtn = document.getElementById('bio-toggle-btn');
+    const bioExpandable = document.getElementById('bio-expandable');
+
+    if (bioToggleBtn && bioExpandable) {
+        bioToggleBtn.addEventListener('click', () => {
+            const isExpanded = bioExpandable.classList.toggle('expanded');
+            bioToggleBtn.classList.toggle('active', isExpanded);
+            bioToggleBtn.setAttribute('aria-expanded', isExpanded);
+            
+            const btnText = bioToggleBtn.querySelector('.btn-text');
+            if (btnText) {
+                btnText.textContent = isExpanded ? 'Shrink Details' : 'Expand Details';
+            }
+        });
+    }
+
     // Convert markdown mermaid blocks to div.mermaid for rendering
     const mermaidNodes = document.querySelectorAll('pre code.language-mermaid');
     mermaidNodes.forEach(node => {

@@ -678,7 +678,7 @@ body {
 
 .hero-title {
     font-family: var(--font-serif);
-    font-size: 2.8rem;
+    font-size: clamp(2.1rem, 2.5vw + 1.2rem, 2.8rem);
     font-weight: 500;
     line-height: 1.25;
     margin-bottom: 1.8rem;
@@ -686,17 +686,65 @@ body {
     letter-spacing: -0.5px;
 }
 
-@media (max-width: 600px) {
-    .hero-title {
-        font-size: 2.1rem;
-    }
-}
-
 .hero-lead {
-    font-size: 1.2rem;
+    font-size: 1.18rem;
     color: var(--text-secondary);
     line-height: 1.8;
-    margin-bottom: 2.2rem;
+    margin-bottom: 1.2rem;
+}
+
+/* Expandable / Shrinkable Bio Styles */
+.bio-expandable {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+}
+
+.bio-expandable.expanded {
+    max-height: 320px;
+    opacity: 1;
+    margin-bottom: 0.5rem;
+}
+
+.hero-lead-extra {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+}
+
+.expand-bio-btn {
+    background: transparent;
+    border: none;
+    color: var(--accent);
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 16px;
+    background-color: rgba(194, 91, 68, 0.08);
+    border: 1px solid rgba(194, 91, 68, 0.2);
+    margin-bottom: 2rem;
+    transition: var(--transition);
+}
+
+.expand-bio-btn:hover {
+    background-color: rgba(194, 91, 68, 0.16);
+    color: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+.expand-bio-btn .expand-icon {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.expand-bio-btn.active .expand-icon {
+    transform: rotate(180deg);
 }
 
 .hero-lead strong {
