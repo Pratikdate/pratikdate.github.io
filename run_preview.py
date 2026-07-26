@@ -83,15 +83,46 @@ for md_file in glob.glob('_blogs/*.md'):
 # Sort by date descending (and then by filename descending to match Jekyll's reverse sort)
 blogs.sort(key=lambda x: (x['date_obj'], x['slug']), reverse=True)
 
-# Generate index.html
+# Generate index.html (About page)
 with open('index.html') as f:
     index_content = f.read()
 index_content = re.sub(r'---.*?---', '', index_content, flags=re.DOTALL).replace('{{ site.baseurl }}', '')
 
-mock_blogs_html = ""
+mock_recent_blogs_html = ""
+for b in blogs[:2]:
+    slug_name = b['slug'].replace('.html', '')
+    mock_recent_blogs_html += f'''
+    <a class="post-row" href="/blog/{slug_name}/">
+        <div class="card-header">
+            <span class="post-pill">Essay</span>
+            <time class="card-date" datetime="{b['date_str']}">{b['date_formatted']}</time>
+        </div>
+        <div class="post-copy">
+            <h2>{b['title']}</h2>
+            <p>{b['excerpt']}</p>
+            <div class="read-meta">
+                <span class="read-link">Read essay <span class="arrow">&rarr;</span></span>
+            </div>
+        </div>
+    </a>
+    '''
+
+index_content = re.sub(r'{% assign sorted_blogs = site.blogs \| sort: \'date\' \| reverse %}\s*{% for blog in sorted_blogs limit:2 %}.*?{% endfor %}', mock_recent_blogs_html, index_content, flags=re.DOTALL)
+final_index = layout.replace('{{ content }}', index_content).replace('{% if page.url == \'/\' or page.url == \'/index.html\' %}active{% endif %}', 'active').replace('{% if page.url contains \'/blog\' %}active{% endif %}', '')
+with open(os.path.join(preview_dir, 'index.html'), 'w') as f:
+    f.write(final_index)
+
+# Generate blog/index.html (Blog page)
+os.makedirs(os.path.join(preview_dir, 'blog'), exist_ok=True)
+with open('blog/index.html') as f:
+    blog_index_content = f.read()
+blog_index_content = re.sub(r'---.*?---', '', blog_index_content, flags=re.DOTALL).replace('{{ site.baseurl }}', '')
+
+mock_all_blogs_html = ""
 for b in blogs:
-    mock_blogs_html += f'''
-    <a class="post-row slide-up" href="/_blogs/{b['slug']}">
+    slug_name = b['slug'].replace('.html', '')
+    mock_all_blogs_html += f'''
+    <a class="post-row slide-up" href="/blog/{slug_name}/">
         <div class="card-header">
             <span class="post-pill">Essay</span>
             <time class="card-date" datetime="{b['date_str']}">{b['date_formatted']}</time>
@@ -106,27 +137,41 @@ for b in blogs:
     </a>
     '''
 
+blog_index_content = re.sub(r'{% assign sorted_blogs = site.blogs \| sort: \'date\' \| reverse %}\s*{% for blog in sorted_blogs %}.*?{% endfor %}', mock_all_blogs_html, blog_index_content, flags=re.DOTALL)
+final_blog_index = layout.replace('{{ content }}', blog_index_content).replace('{% if page.url == \'/\' or page.url == \'/index.html\' %}active{% endif %}', '').replace('{% if page.url contains \'/blog\' %}active{% endif %}', 'active')
+with open(os.path.join(preview_dir, 'blog', 'index.html'), 'w') as f:
+    f.write(final_blog_index)
 
-
-index_content = re.sub(r'{% assign sorted_blogs = site.blogs \| sort: \'date\' \| reverse %}\n\s*{% for blog in sorted_blogs %}.*?{% endfor %}', mock_blogs_html, index_content, flags=re.DOTALL)
-final_index = layout.replace('{{ content }}', index_content)
-with open(os.path.join(preview_dir, 'index.html'), 'w') as f:
-    f.write(final_index)
-
-# Generate individual blog pages
+# Generate individual blog pages at both /blog/<slug>/index.html and /_blogs/<slug>.html
 for b in blogs:
     post_html = blog_layout.replace('{{ content }}', b['body_html'])
     post_html = post_html.replace('{{ page.title | default: page.name }}', b['title'])
     post_html = re.sub(r'{% if page.date %}.*?{% endif %}', f'<time class="blog-date">{b["date_formatted"]}</time>', post_html, flags=re.DOTALL)
     
-    final_post = layout.replace('{{ content }}', post_html).replace('{{ page.title | default: site.name }}', b['title'])
+    final_post = layout.replace('{{ content }}', post_html).replace('{{ page.title | default: site.name }}', b['title']).replace('{% if page.url contains \'/blog\' %}active{% endif %}', 'active').replace('{% if page.url == \'/\' or page.url == \'/index.html\' %}active{% endif %}', '')
+    
+    slug_name = b['slug'].replace('.html', '')
+    # Save to /blog/<slug_name>/index.html
+    post_dir = os.path.join(preview_dir, 'blog', slug_name)
+    os.makedirs(post_dir, exist_ok=True)
+    with open(os.path.join(post_dir, 'index.html'), 'w') as f:
+        f.write(final_post)
+        
+    # Save to /_blogs/<slug>.html for fallback
     with open(os.path.join(preview_dir, '_blogs', b['slug']), 'w') as f:
         f.write(final_post)
 
 # Serve it
 os.chdir(preview_dir)
+socketserver.TCPServer.allow_reuse_address = True
+
 PORT = 8098
-print("Serving at port", PORT)
-Handler = http.server.SimpleHTTPRequestHandler
-with socketserver.TCPServer(("", PORT), Handler) as httpd:
-    httpd.serve_forever()
+while True:
+    try:
+        Handler = http.server.SimpleHTTPRequestHandler
+        httpd = socketserver.TCPServer(("", PORT), Handler)
+        print(f"Serving preview at http://localhost:{PORT}")
+        httpd.serve_forever()
+        break
+    except OSError:
+        PORT += 1

@@ -6,7 +6,7 @@ url: "https://pratikdate.github.io"
 collections:
   blogs:
     output: true
-    permalink: /blogs/:name/
+    permalink: /blog/:name/
 
 defaults:
   - scope:

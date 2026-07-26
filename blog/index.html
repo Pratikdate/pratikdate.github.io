@@ -1,0 +1,36 @@
+---
+layout: default
+title: "Writing & Essays | Pratik's Blogs"
+permalink: /blog/
+---
+<div class="feed-container">
+    <div class="list-header slide-up">
+        <span class="eyebrow">Essays & Notes</span>
+        <hr class="header-line">
+    </div>
+
+    <div class="posts" aria-live="polite">
+        {% assign sorted_blogs = site.blogs | sort: 'date' | reverse %}
+        {% for blog in sorted_blogs %}
+        <a class="post-row slide-up" href="{{ site.baseurl }}{{ blog.url }}" style="animation-delay: 0.1s;">
+            <div class="card-header">
+                <span class="post-pill">Essay</span>
+                {% if blog.date %}
+                <time class="card-date" datetime="{{ blog.date | date_to_xmlschema }}">{{ blog.date | date: "%B %-d, %Y" }}</time>
+                {% endif %}
+            </div>
+            <div class="post-copy">
+                <h2>{{ blog.title | default: blog.name }}</h2>
+                <p>{{ blog.excerpt | strip_html | truncatewords: 28 }}</p>
+                <div class="read-meta">
+                    <span class="read-link">Read article <span class="arrow">&rarr;</span></span>
+                </div>
+            </div>
+        </a>
+        {% else %}
+        <div class="empty-state slide-up">
+            <p>No blogs published yet. Start writing by adding markdown files to the <code>_blogs</code> folder.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
