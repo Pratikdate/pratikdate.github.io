@@ -10,7 +10,7 @@ layout: default
     <div class="posts" aria-live="polite">
         {% assign sorted_blogs = site.blogs | sort: 'date' | reverse %}
         {% for blog in sorted_blogs %}
-        <a class="post-row paper-card slide-up" href="{{ site.baseurl }}{{ blog.url }}" style="animation-delay: 0.1s;">
+        <a class="post-row slide-up" href="{{ site.baseurl }}{{ blog.url }}" style="animation-delay: 0.1s;">
             <div class="card-header">
                 <span class="post-pill">Essay</span>
                 {% if blog.date %}
@@ -26,7 +26,7 @@ layout: default
             </div>
         </a>
         {% else %}
-        <div class="empty-state paper-card slide-up">
+        <div class="empty-state slide-up">
             <p>No blogs published yet. Start writing by adding markdown files to the <code>_blogs</code> folder.</p>
         </div>
         {% endfor %}

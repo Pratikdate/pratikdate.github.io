@@ -91,7 +91,7 @@ index_content = re.sub(r'---.*?---', '', index_content, flags=re.DOTALL).replace
 mock_blogs_html = ""
 for b in blogs:
     mock_blogs_html += f'''
-    <a class="post-row paper-card slide-up" href="/_blogs/{b['slug']}">
+    <a class="post-row slide-up" href="/_blogs/{b['slug']}">
         <div class="card-header">
             <span class="post-pill">Essay</span>
             <time class="card-date" datetime="{b['date_str']}">{b['date_formatted']}</time>
@@ -105,6 +105,7 @@ for b in blogs:
         </div>
     </a>
     '''
+
 
 
 index_content = re.sub(r'{% assign sorted_blogs = site.blogs \| sort: \'date\' \| reverse %}\n\s*{% for blog in sorted_blogs %}.*?{% endfor %}', mock_blogs_html, index_content, flags=re.DOTALL)
