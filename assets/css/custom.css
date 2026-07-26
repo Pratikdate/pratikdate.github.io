@@ -500,3 +500,31 @@ body {
 .like-button.liked .heart-icon {
     transform: scale(1.1);
 }
+
+/* Responsive Image Styling & Captions */
+.blog-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    transition: var(--transition);
+}
+
+.blog-content img:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.blog-content em {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: -1.2rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+

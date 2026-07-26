@@ -11,7 +11,7 @@ Whenever people talk about the "AI Revolution," they usually show off Large Lang
 
 SQL tables, Excel spreadsheets, CSV files, customer activity logs, financial transactions, and medical records—tabular data powers over **80% of real-world enterprise ML applications**. It predicts whether a credit card transaction is fraudulent, whether a customer is about to cancel their subscription, or how much inventory a store should stock next week.
 
-![TabFM Overview](https://storage.googleapis.com/gweb-research2023-media/original_images/TabFM1_Hero.png)
+![TabFM Overview]({{ site.baseurl }}/assets/images/tabfm/tabfm-hero.png)
 *Figure 1: TabFM brings zero-shot foundation model capabilities directly to tabular datasets. Image credit: Google Research.*
 
 For over a decade, one class of algorithms has reigned supreme over tabular data: **Tree-based models like XGBoost, LightGBM, and Random Forests**.
@@ -72,7 +72,7 @@ Tables, however, are **2D and orderless**:
 
 To overcome this, Google synthesized the strengths of pioneering tabular models like TabPFN and TabICL into a novel hybrid design:
 
-![TabFM Model Architecture](https://storage.googleapis.com/gweb-research2023-media/original_images/TabFM_Architecture.png)
+![TabFM Model Architecture]({{ site.baseurl }}/assets/images/tabfm/tabfm-architecture.png)
 *Figure 2: The official TabFM architectural pipeline from Google Research. It alternates row and column attention, compresses row representations, and executes in-context learning.*
 
 Let's break down this architecture step-by-step:
@@ -106,7 +106,7 @@ Google dynamically generated hundreds of millions of synthetic tables with mathe
 
 Google rigorously benchmarked TabFM on **TabArena**, a living leaderboard system evaluating head-to-head win rates (Elo scores) across 51 real-world datasets (38 classification and 13 regression tasks) ranging from 700 to 150,000 samples.
 
-![TabFM Performance Results](https://storage.googleapis.com/gweb-research2023-media/original_images/TabFM3_Results.png)
+![TabFM Performance Results]({{ site.baseurl }}/assets/images/tabfm/tabfm-results.png)
 *Figure 3: Head-to-head TabArena Elo benchmarks comparing TabFM and TabFM-Ensemble against industry baselines. Image credit: Google Research.*
 
 ### Key Takeaways from the Results:
