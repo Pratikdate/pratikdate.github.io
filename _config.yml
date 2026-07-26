@@ -1,6 +1,6 @@
 name: "Pratik's Blogs"
 description: "Programming essays, thoughts, and notes."
-baseurl: "/blogs" # The repository name is blogs
+baseurl: "" # Set to empty for root user domain (https://pratikdate.github.io)
 url: "https://pratikdate.github.io"
 
 collections:
