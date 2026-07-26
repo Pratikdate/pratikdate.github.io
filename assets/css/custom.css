@@ -1,20 +1,27 @@
-/* Dot Grid "Moon Lite" Theme Variables */
+/* Dot Grid "Moon Lite" Paper Theme Variables */
 :root {
-    --bg-content: #f8f6f0; /* Warm cream from the image */
-    --text-primary: #3d3531; /* Warm dark brown/black */
-    --text-secondary: #706359;
-    --text-muted: #a3968d;
+    --bg-content: #f8f6f0; /* Warm dot-grid background */
+    --card-bg: #f2eada; /* Warm vintage parchment paper card */
+    --card-bg-hover: #f6efe1;
+    --card-border: #e0d5c1; /* Soft warm paper border */
+    --card-shadow: 0 10px 32px rgba(85, 70, 55, 0.08);
+    --card-shadow-hover: 0 16px 45px rgba(85, 70, 55, 0.14);
     
-    --border-color: rgba(200, 190, 180, 0.4); /* For dots and lines */
-    --border-hover: rgba(200, 190, 180, 0.8);
+    --text-primary: #322b27; /* Deep warm brown/black */
+    --text-secondary: #65584f;
+    --text-muted: #96887e;
     
-    --accent: #c25b44; /* Terracotta / Rust from the handwriting in image */
+    --border-color: rgba(190, 175, 160, 0.45); /* For dots and subtle dividers */
+    --border-hover: rgba(180, 160, 140, 0.8);
+    
+    --accent: #c25b44; /* Terracotta red from the handwriting in image */
+    --accent-hover: #a84732;
     
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-serif: 'Lora', Georgia, Cambria, "Times New Roman", Times, serif;
     --font-handwriting: 'Caveat', cursive;
     
-    --transition: all 0.3s ease;
+    --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -26,7 +33,7 @@
 body {
     background-color: var(--bg-content);
     background-image: radial-gradient(circle, var(--border-color) 1.5px, transparent 1.5px);
-    background-size: 20px 20px; /* The spacing of the dot grid */
+    background-size: 22px 22px; /* Spacing of the dot grid */
     color: var(--text-primary);
     font-family: var(--font-serif);
     line-height: 1.7;
@@ -130,15 +137,15 @@ body {
 
 .logo {
     font-family: var(--font-handwriting);
-    font-size: 3.2rem;
+    font-size: 3.4rem;
     font-weight: 700;
     line-height: 1.1;
     text-decoration: none;
-    color: var(--accent); /* Brand matches the terracotta writing in the image */
+    color: var(--accent); /* Terracotta handwritten logo */
     display: block;
     margin-bottom: 1.5rem;
     letter-spacing: -0.5px;
-    transform: rotate(-2deg); /* slight slant for handwriting feel */
+    transform: rotate(-2deg);
 }
 
 .bio {
@@ -181,33 +188,34 @@ body {
 .content-pane {
     flex: 1;
     background-color: transparent;
-    padding: 3rem 2rem;
-    min-width: 0; /* Prevents flex blowout */
+    padding: 2.5rem 1.5rem;
+    min-width: 0;
 }
 
 @media (min-width: 900px) {
     .content-pane {
-        padding: 5rem;
+        padding: 4rem 5rem;
     }
 }
 
 /* Home / Posts List */
 .feed-container {
-    max-width: 800px;
+    max-width: 860px;
     margin: 0 auto;
 }
 
 .list-header {
     display: flex;
     align-items: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
 }
 
 .eyebrow {
     font-family: var(--font-sans);
     font-size: 0.85rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.8px;
     color: var(--text-muted);
     margin-right: 1.5rem;
 }
@@ -219,44 +227,67 @@ body {
     border: none;
 }
 
-.post-row {
+.posts {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
+}
+
+/* Paper Card Style (Matching the reference screenshot) */
+.paper-card {
+    background-color: var(--card-bg);
+    background-image: linear-gradient(160deg, #f5ebd8 0%, #ebe0ca 100%);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    padding: 2.2rem 2.6rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.post-row {
+    display: block;
     text-decoration: none;
     color: inherit;
-    padding: 3rem 0;
-    border-bottom: 1px solid var(--border-color);
-    transition: var(--transition);
 }
 
-@media (min-width: 700px) {
-    .post-row {
-        flex-direction: row;
-        align-items: flex-start;
-    }
+.post-row.paper-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: rgba(180, 160, 140, 0.7);
+    background-color: var(--card-bg-hover);
 }
 
-.post-row:hover {
-    border-bottom-color: var(--border-hover);
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
 }
 
-.post-meta {
+.post-pill {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    background-color: rgba(80, 65, 50, 0.08);
+    color: var(--text-secondary);
+    border: 1px solid rgba(80, 65, 50, 0.1);
+}
+
+.card-date {
     font-family: var(--font-sans);
     font-size: 0.9rem;
     color: var(--text-muted);
-    min-width: 140px;
-    margin-bottom: 0.5rem;
-    padding-top: 0.3rem;
-}
 
-.post-copy {
-    flex: 1;
 }
 
 .post-copy h2 {
     font-family: var(--font-serif);
-    font-size: 1.8rem;
-    font-weight: 500;
+    font-size: 1.85rem;
+    font-weight: 600;
     margin-bottom: 0.8rem;
     line-height: 1.3;
     color: var(--text-primary);
@@ -269,22 +300,23 @@ body {
 
 .post-copy p {
     color: var(--text-secondary);
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     margin-bottom: 1.5rem;
-    line-height: 1.6;
+    line-height: 1.65;
 }
 
 .read-link {
     font-family: var(--font-sans);
     font-size: 0.9rem;
-    color: var(--text-muted);
+    font-weight: 500;
+    color: var(--text-secondary);
     display: inline-flex;
     align-items: center;
     transition: var(--transition);
 }
 
 .post-row:hover .read-link {
-    color: var(--text-primary);
+    color: var(--accent);
 }
 
 .arrow {
@@ -296,44 +328,67 @@ body {
     transform: translateX(6px);
 }
 
-/* Individual Blog Post */
+/* Individual Blog Post (Paper Card Container) */
 .blog-post {
     max-width: 900px;
-    margin: 0;
+    margin: 0 auto;
+}
+
+.blog-post.paper-card {
+    padding: 3rem 3.5rem;
+}
+
+@media (max-width: 768px) {
+    .blog-post.paper-card {
+        padding: 2rem 1.8rem;
+    }
+    .paper-card {
+        padding: 1.8rem 1.5rem;
+    }
 }
 
 .blog-header {
-    margin-bottom: 4rem;
+    margin-bottom: 3.5rem;
+    border-bottom: 1px dashed var(--card-border);
+    padding-bottom: 2rem;
 }
 
 .blog-title {
-    font-size: 3.2rem;
-    font-weight: 500;
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
     letter-spacing: -0.5px;
+    color: var(--text-primary);
 }
 
 .blog-date {
     font-family: var(--font-sans);
     color: var(--accent);
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 0.95rem;
+    font-weight: 600;
 }
 
 .blog-content {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     color: var(--text-primary);
+    line-height: 1.8;
 }
 
 .blog-content h1, .blog-content h2, .blog-content h3 {
-    font-family: var(--font-sans);
-    margin-top: 3.5rem;
-    margin-bottom: 1.5rem;
+    font-family: var(--font-serif);
+    margin-top: 3.2rem;
+    margin-bottom: 1.2rem;
     font-weight: 600;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.3px;
     color: var(--text-primary);
     line-height: 1.3;
+}
+
+.blog-content h2 {
+    font-size: 1.8rem;
+    border-bottom: 1px solid rgba(180, 160, 140, 0.3);
+    padding-bottom: 0.5rem;
 }
 
 .blog-content p {
@@ -354,13 +409,23 @@ body {
 }
 
 .blog-content li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.blog-content blockquote {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-left: 4px solid var(--accent);
+    padding: 1.2rem 1.8rem;
+    border-radius: 0 12px 12px 0;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--text-secondary);
 }
 
 .blog-content a {
     color: var(--accent);
     text-decoration: none;
-    border-bottom: 1px solid rgba(184, 75, 49, 0.3);
+    border-bottom: 1px solid rgba(194, 91, 68, 0.3);
     transition: var(--transition);
 }
 
@@ -370,21 +435,22 @@ body {
 
 .blog-content code {
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-    background-color: rgba(0,0,0,0.04);
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
+    background-color: rgba(60, 50, 40, 0.06);
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
     font-size: 0.85em;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(180, 160, 140, 0.3);
 }
 
 .blog-content pre {
-    background-color: #1a1816;
-    color: #fdfdfa;
-    padding: 1.5rem;
-    border-radius: 8px;
+    background-color: #24201d;
+    color: #f5efe6;
+    padding: 1.6rem;
+    border-radius: 12px;
     overflow-x: auto;
     margin-bottom: 2rem;
     font-size: 0.9rem;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .blog-content pre code {
@@ -395,9 +461,12 @@ body {
 }
 
 .blog-footer {
-    margin-top: 5rem;
+    margin-top: 4rem;
     padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px dashed var(--card-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .back-link {
@@ -405,7 +474,7 @@ body {
     color: var(--text-secondary);
     text-decoration: none;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 0.95rem;
     transition: var(--transition);
 }
 
@@ -442,10 +511,10 @@ body {
 }
 
 .mermaid {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.7);
     padding: 2rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
     margin: 2rem 0;
     overflow-x: auto;
     display: flex;
@@ -453,17 +522,11 @@ body {
 }
 
 /* Like Button */
-.blog-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .like-button {
-    background: transparent;
-    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--card-border);
     border-radius: 20px;
-    padding: 0.4rem 1rem;
+    padding: 0.4rem 1.1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -477,10 +540,11 @@ body {
 .like-button:hover {
     border-color: var(--accent);
     color: var(--accent);
+    background: #ffffff;
 }
 
 .like-button.liked {
-    background-color: rgba(194, 91, 68, 0.1);
+    background-color: rgba(194, 91, 68, 0.12);
     border-color: var(--accent);
     color: var(--accent);
 }
@@ -508,14 +572,14 @@ body {
     display: block;
     margin: 2rem auto;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--border-color);
+    box-shadow: 0 6px 22px rgba(80, 65, 50, 0.12);
+    border: 1px solid var(--card-border);
     background-color: #ffffff;
     transition: var(--transition);
 }
 
 .blog-content img:hover {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 32px rgba(80, 65, 50, 0.18);
 }
 
 .blog-content em {
@@ -527,4 +591,3 @@ body {
     margin-bottom: 2rem;
     font-style: italic;
 }
-

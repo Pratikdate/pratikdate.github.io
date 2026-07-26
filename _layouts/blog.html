@@ -1,13 +1,13 @@
 ---
 layout: default
 ---
-<article class="blog-post slide-up">
+<article class="blog-post paper-card slide-up">
     <a href="{{ site.baseurl }}/" class="back-link back-link-top">&larr; Back to writing</a>
     <header class="blog-header">
         <h1 class="blog-title">{{ page.title | default: page.name }}</h1>
         <div class="blog-meta">
             {% if page.date %}
-            <time class="blog-date" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>
+            <time class="blog-date" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
             {% endif %}
         </div>
     </header>
